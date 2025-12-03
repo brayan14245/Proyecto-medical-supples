@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--bs-primary); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">ArtCode.com</a>
+        <a class="navbar-brand" href="/">Medical Supples</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
@@ -27,10 +27,10 @@
                 </li>
 
             </ul>
-            <a href="{{route('carrito.mostrar')}}" class="btn btn-outline-dark">
+            <a href="{{route('carrito.mostrar')}}" class="btn btn-outline-light">
                 <i class="bi-cart-fill me-1"></i>
                 Pedido
-                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                <span class="badge bg-light text-dark ms-1 rounded-pill">
                 {{ session('carrito') ? array_sum(array_column(session('carrito'), 'cantidad')) : 0 }}
                 </span>
             </a>

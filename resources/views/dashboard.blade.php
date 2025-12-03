@@ -8,10 +8,26 @@
             <div class="col-md-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h3 class="card-title">Dashboard</h3>
+                        <h3 class="card-title">Administracion</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <p>Bienvenido al panel de administración.</p>
+                        <!-- Small boxes (Stat box) -->
+                         <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>150</h3>
+
+                <p>New Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
                         @if(Session::has('mensaje'))
                             <div class="alert alert-info alert-dismissible fade show mt-2">
                                 {{Session::get('mensaje')}}
