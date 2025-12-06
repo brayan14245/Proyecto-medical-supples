@@ -1,8 +1,13 @@
-@extends('web.app')
-@section('header')
-@endsection
-
-@section('contenido')
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Supplies - Equipos y Productos Médicos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
     <!-- Welcome Banner -->
     <div class="welcome-banner">
         <div class="banner-bg"></div>
@@ -49,20 +54,14 @@
             </nav>
 
             <div class="header-actions">
-                @auth
-                    <a href="{{ route('perfil.edit') }}" class="btn-icon" title="Mi Perfil">
-                        <i class="fas fa-user"></i>
-                    </a>
-                @else
-                    <button class="btn-icon" onclick="openLoginModal()" title="Iniciar Sesión">
-                        <i class="fas fa-user"></i>
-                    </button>
-                @endauth
-                <button class="btn-icon cart-btn" onclick="openCart()" title="Carrito de Compras">
+                <button class="btn-icon" onclick="openLoginModal()">
+                    <i class="fas fa-user"></i>
+                </button>
+                <button class="btn-icon cart-btn" onclick="openCart()">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-badge" id="cartBadge">0</span>
                 </button>
-                <button class="btn btn-primary desktop-only" onclick="document.getElementById('productos').scrollIntoView({ behavior: 'smooth' })">Cotizar</button>
+                <button class="btn btn-primary desktop-only">Cotizar</button>
                 <button class="btn-icon mobile-menu-btn" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -90,26 +89,25 @@
                 <div class="hero-features">
                     <div class="feature-item">
                         <i class="fas fa-check-circle"></i>
-                        <span>Productos certificados internacionalmente</span>
+                        <span>Productos certificados y garantizados</span>
                     </div>
                     <div class="feature-item">
-                        <i class="fas fa-shipping-fast"></i>
-                        <span>Envío rápido a toda la región</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Envío rápido a todo el país</span>
                     </div>
                     <div class="feature-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Garantía de 100% satisfacción</span>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Asesoría técnica especializada</span>
                     </div>
                 </div>
 
                 <div class="hero-buttons">
-                    <button class="btn btn-primary btn-lg" onclick="document.getElementById('productos').scrollIntoView({ behavior: 'smooth' })">
-                        <i class="fas fa-shopping-bag"></i>
+                    <button class="btn btn-primary btn-lg">
                         Ver Catálogo
+                        <i class="fas fa-arrow-right"></i>
                     </button>
-                    <button class="btn btn-outline btn-lg" onclick="document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' })">
-                        <i class="fas fa-phone"></i>
-                        Contactar
+                    <button class="btn btn-outline btn-lg">
+                        Contactar Asesor
                     </button>
                 </div>
             </div>
@@ -121,7 +119,7 @@
                 </div>
                 
                 <div class="stat-card stat-card-left">
-                    <div class="stat-number">{{ $stats['productos_count'] ?? '500+' }}</div>
+                    <div class="stat-number">500+</div>
                     <div class="stat-label">Productos Disponibles</div>
                 </div>
                 
@@ -141,13 +139,13 @@
             <div class="carousel-wrapper">
                 <div class="carousel-track" id="carouselTrack">
                     <div class="carousel-slide">
-                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80" alt="Equipos médicos">
+                        <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=1200&q=80" alt="Hospital moderno">
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1200&q=80" alt="Tecnología médica">
+                        <img src="https://images.unsplash.com/photo-1584820927498-cfe5bfb1f1e7?w=1200&q=80" alt="Equipos médicos">
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://images.unsplash.com/photo-1579154204601-01d82b44c141?w=1200&q=80" alt="Instrumentos médicos">
+                        <img src="https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?w=1200&q=80" alt="Tecnología médica">
                     </div>
                 </div>
                 <button class="carousel-btn carousel-btn-prev" onclick="prevSlide()">
@@ -167,12 +165,12 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <i class="fas fa-hospital stat-icon"></i>
-                    <div class="stat-value">{{ $stats['clientes'] ?? '1,000+' }}</div>
+                    <div class="stat-value">1,000+</div>
                     <div class="stat-title">Clientes Satisfechos</div>
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-box stat-icon"></i>
-                    <div class="stat-value">{{ $stats['productos_count'] ?? '500+' }}</div>
+                    <div class="stat-value">500+</div>
                     <div class="stat-title">Productos en Stock</div>
                 </div>
                 <div class="stat-item">
@@ -209,7 +207,7 @@
 
                 <div class="category-card" onclick="filterByCategory('cirugia')">
                     <div class="category-icon">
-                        <i class="fas fa-scalpel"></i>
+                        <i class="fas fa-syringe"></i>
                     </div>
                     <h3>Cirugía</h3>
                     <p>Instrumental quirúrgico profesional</p>
@@ -218,7 +216,7 @@
 
                 <div class="category-card" onclick="filterByCategory('laboratorio')">
                     <div class="category-icon">
-                        <i class="fas fa-flask"></i>
+                        <i class="fas fa-microscope"></i>
                     </div>
                     <h3>Laboratorio</h3>
                     <p>Equipamiento para laboratorio clínico</p>
@@ -245,7 +243,7 @@
 
                 <div class="category-card" onclick="filterByCategory('rehabilitacion')">
                     <div class="category-icon">
-                        <i class="fas fa-dumbbell"></i>
+                        <i class="fas fa-wheelchair"></i>
                     </div>
                     <h3>Rehabilitación</h3>
                     <p>Equipos de fisioterapia</p>
@@ -272,16 +270,18 @@
 
                 <div class="filter-group">
                     <select id="brandFilter" onchange="filterProducts()">
-                        <option value="">Todas las marcas</option>
-                        @foreach($marcas ?? [] as $marca)
-                            <option value="{{ $marca }}">{{ $marca }}</option>
-                        @endforeach
+                        <option value="">Todas las Marcas</option>
+                        <option value="Medtronic">Medtronic</option>
+                        <option value="Philips">Philips</option>
+                        <option value="GE Healthcare">GE Healthcare</option>
+                        <option value="Siemens">Siemens</option>
+                        <option value="3M">3M</option>
                     </select>
                 </div>
 
                 <div class="filter-group">
                     <select id="categoryFilter" onchange="filterProducts()">
-                        <option value="">Todas las categorías</option>
+                        <option value="">Todas las Categorías</option>
                         <option value="diagnostico">Diagnóstico</option>
                         <option value="cirugia">Cirugía</option>
                         <option value="laboratorio">Laboratorio</option>
@@ -293,11 +293,11 @@
 
                 <div class="filter-group">
                     <select id="zoneFilter" onchange="filterProducts()">
-                        <option value="">Todas las zonas</option>
+                        <option value="">Todas las Zonas</option>
                         <option value="cardiovascular">Cardiovascular</option>
+                        <option value="respiratorio">Respiratorio</option>
                         <option value="neurologico">Neurológico</option>
                         <option value="musculoesqueletico">Musculoesquelético</option>
-                        <option value="respiratorio">Respiratorio</option>
                     </select>
                 </div>
             </div>
@@ -327,11 +327,14 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-text">
-                        "Excelente calidad en los productos y muy profesional el servicio. Recomendado al 100%."
+                        "Excelente calidad en los equipos. El servicio de atención es muy profesional y los tiempos de entrega son rápidos."
                     </p>
                     <div class="testimonial-author">
-                        <div class="author-name">Dr. Juan García</div>
-                        <div class="author-role">Cardiólogo</div>
+                        <img src="https://i.pravatar.cc/150?img=1" alt="Dr. Carlos Méndez">
+                        <div>
+                            <div class="author-name">Dr. Carlos Méndez</div>
+                            <div class="author-role">Cardiólogo</div>
+                        </div>
                     </div>
                 </div>
 
@@ -344,11 +347,14 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-text">
-                        "Los equipos son de primera calidad y el envío fue muy rápido. Perfectamente empaquetado."
+                        "Los productos son de primera calidad y cuentan con todas las certificaciones necesarias. Muy recomendado."
                     </p>
                     <div class="testimonial-author">
-                        <div class="author-name">Dra. María López</div>
-                        <div class="author-role">Cirujana</div>
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Dra. María González">
+                        <div>
+                            <div class="author-name">Dra. María González</div>
+                            <div class="author-role">Cirujana</div>
+                        </div>
                     </div>
                 </div>
 
@@ -361,11 +367,14 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-text">
-                        "Mejor opción en relación a precio y calidad. Muy atentos con mis consultas."
+                        "He comprado varios equipos para mi clínica. La asesoría técnica es excepcional y los precios son competitivos."
                     </p>
                     <div class="testimonial-author">
-                        <div class="author-name">Dr. Carlos Rodríguez</div>
-                        <div class="author-role">Neurocirujano</div>
+                        <img src="https://i.pravatar.cc/150?img=8" alt="Dr. Juan Ramírez">
+                        <div>
+                            <div class="author-name">Dr. Juan Ramírez</div>
+                            <div class="author-role">Director de Clínica</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -416,9 +425,9 @@
                     <p>Certificación Europea</p>
                 </div>
                 <div class="certification-card">
-                    <i class="fas fa-medal"></i>
-                    <h3>ISO 13485</h3>
-                    <p>Dispositivos Médicos</p>
+                    <i class="fas fa-award"></i>
+                    <h3>Garantía</h3>
+                    <p>2 Años de Garantía</p>
                 </div>
             </div>
         </div>
@@ -429,17 +438,10 @@
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info">
-                    <h2>Ponte en Contacto</h2>
-                    <p>¿Tienes preguntas? Nos encantaría escucharte. Envíanos un mensaje.</p>
-
+                    <h2>Contáctanos</h2>
+                    <p>Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos pronto.</p>
+                    
                     <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <div class="contact-label">Dirección</div>
-                                <div class="contact-value">Calle Principal 123, Ciudad, País</div>
-                            </div>
-                        </div>
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <div>
@@ -451,7 +453,14 @@
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <div class="contact-label">Email</div>
-                                <div class="contact-value">info@medicalsupplies.com</div>
+                                <div class="contact-value">contacto@medicalsupplies.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <div class="contact-label">Dirección</div>
+                                <div class="contact-value">123 Medical Plaza, Ciudad</div>
                             </div>
                         </div>
                     </div>
@@ -460,19 +469,19 @@
                 <form class="contact-form" onsubmit="handleContactSubmit(event)">
                     <div class="form-group">
                         <label for="name">Nombre Completo</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Asunto</label>
-                        <input type="text" id="subject" name="subject" required>
+                        <label for="phone">Teléfono</label>
+                        <input type="tel" id="phone">
                     </div>
                     <div class="form-group">
                         <label for="message">Mensaje</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <textarea id="message" rows="4" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-full">Enviar Mensaje</button>
                 </form>
@@ -486,16 +495,28 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="footer-logo">
-                        <i class="fas fa-heartbeat"></i>
+                        <div class="logo-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
                         <span>Medical Supplies</span>
                     </div>
-                    <p>Tu socio confiable en equipamiento médico de calidad.</p>
+                    <p>Equipos médicos de alta calidad para profesionales de la salud.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#categorias">Categorías</a></li>
+                        <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                    </ul>
                 </div>
 
                 <div class="footer-col">
@@ -509,20 +530,11 @@
                 </div>
 
                 <div class="footer-col">
-                    <h3>Empresa</h3>
-                    <ul>
-                        <li><a href="#">Sobre Nosotros</a></li>
-                        <li><a href="#">Contacto</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Carreras</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3>Información Legal</h3>
+                    <h3>Contacto</h3>
                     <ul class="contact-list">
-                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@medicalsupplies.com">info@medicalsupplies.com</a></li>
-                        <li><i class="fas fa-phone"></i> <a href="tel:+15551234567">+1 (555) 123-4567</a></li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> contacto@medicalsupplies.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Medical Plaza, Ciudad</li>
                     </ul>
                 </div>
             </div>
@@ -546,15 +558,14 @@
                 <h2>Iniciar Sesión</h2>
                 <button class="modal-close" onclick="closeLoginModal()">&times;</button>
             </div>
-            <form action="{{ route('login') }}" method="POST">
-                @csrf
+            <form onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" name="email" required>
+                    <label for="loginEmail">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" required>
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña</label>
-                    <input type="password" id="loginPassword" name="password" required>
+                    <input type="password" id="loginPassword" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-full">Iniciar Sesión</button>
             </form>
@@ -571,19 +582,18 @@
                 <h2>Crear Cuenta</h2>
                 <button class="modal-close" onclick="closeRegisterModal()">&times;</button>
             </div>
-            <form action="{{ route('register') }}" method="POST">
-                @csrf
+            <form onsubmit="handleRegister(event)">
                 <div class="form-group">
                     <label for="registerName">Nombre Completo</label>
-                    <input type="text" id="registerName" name="name" required>
+                    <input type="text" id="registerName" required>
                 </div>
                 <div class="form-group">
-                    <label for="registerEmail">Email</label>
-                    <input type="email" id="registerEmail" name="email" required>
+                    <label for="registerEmail">Correo Electrónico</label>
+                    <input type="email" id="registerEmail" required>
                 </div>
                 <div class="form-group">
                     <label for="registerPassword">Contraseña</label>
-                    <input type="password" id="registerPassword" name="password" required>
+                    <input type="password" id="registerPassword" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-full">Crear Cuenta</button>
             </form>
@@ -631,25 +641,6 @@
         </div>
     </div>
 
-    <script>
-        // Productos desde Laravel (pasar como datos globales)
-        const products = @json($productos ?? []);
-    </script>
-@endsection
-
-@push('page-scripts')
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-<script src="{{ asset('js/script.js') }}"></script>
-<script>
-// Override para trabajar con datos de Laravel si existen
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof products !== 'undefined' && products.length > 0) {
-        // Ya tenemos los productos de Laravel
-        filteredProducts = [...products];
-    }
-    renderProducts();
-    updateCartBadge();
-    updateIndicators();
-});
-</script>
-@endpush
+    <script src="script.js"></script>
+</body>
+</html>

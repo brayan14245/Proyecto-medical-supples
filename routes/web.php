@@ -52,7 +52,7 @@ Route::middleware('guest')->group(function(){
     })->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
-    Route::get('/registro', [RegisterController::class, 'showRegistroForm'])->name('registro');
+    Route::get('/registro', [RegisterController::class, 'showRegistroForm'])->name('register');
     Route::post('/registro', [RegisterController::class, 'registrar'])->name('registro.store');
 
     Route::get('password/reset', [ResetPasswordController::class, 'showRequestForm'])->name('password.request');
