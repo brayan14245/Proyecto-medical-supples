@@ -16,6 +16,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- FontAwesome Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Header CSS -->
+        <link href="{{asset('css/header.css')}}" rel="stylesheet" />
+        <!-- Register CSS -->
+        <link href="{{asset('css/register.css')}}" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
         @stack('estilos')

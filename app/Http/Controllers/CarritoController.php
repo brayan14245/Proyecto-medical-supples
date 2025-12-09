@@ -30,8 +30,8 @@ class CarritoController extends Controller
     }
 
     public function mostrar(){
-        $carrito =session('carrito', []);
-        return view('web.pedido', compact('carrito'));
+        $carrito = session('carrito', []);
+        return view('web.carrito', compact('carrito'));
     }
 
     public function sumar(Request $request){

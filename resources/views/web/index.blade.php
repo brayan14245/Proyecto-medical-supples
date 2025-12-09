@@ -3,6 +3,48 @@
 @endsection
 
 @section('contenido')
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <span class="logo-text">Medical Supplies</span>
+            </div>
+
+            <nav class="nav">
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="#categorias">Categorías</a>
+                <a href="#sobre-nosotros">Sobre Nosotros</a>
+                <a href="#contacto">Contacto</a>
+                @guest
+                    <a href="javascript:void(0);" onclick="document.getElementById('loginModal').classList.add('active')">Iniciar sesión</a>
+                @endguest
+            </nav>
+
+            <div class="header-actions">
+                @auth
+                    <a href="{{ route('perfil.edit') }}" class="btn-icon" title="Mi Perfil">
+                        <i class="fas fa-user"></i>
+                    </a>
+                @else
+                    <button class="btn-icon" onclick="document.getElementById('loginModal').classList.add('active')" title="Iniciar Sesión">
+                        <i class="fas fa-user"></i>
+                    </button>
+                @endauth
+                <button class="btn-icon cart-btn" onclick="window.location.href='{{ route('carrito.mostrar') }}'" title="Carrito de Compras">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="btn-icon mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
     <!-- Welcome Banner -->
     <div class="welcome-banner">
         <div class="banner-bg"></div>
@@ -500,26 +542,27 @@
 
     <!-- Modals -->
     <!-- Login Modal -->
+    <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Iniciar Sesión</h2>
-                <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+                <button class="modal-close" onclick="document.getElementById('loginModal').classList.remove('active')">&times;</button>
             </div>
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('login') }}" method="POST" class="register-form">
                 @csrf
                 <div class="form-group">
                     <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" name="email" required>
+                    <input type="email" id="loginEmail" name="email" placeholder="tu@email.com" required>
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña</label>
-                    <input type="password" id="loginPassword" name="password" required>
+                    <input type="password" id="loginPassword" name="password" placeholder="Tu contraseña" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-full">Iniciar Sesión</button>
             </form>
             <p class="modal-footer-text">
-                ¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate aquí</a>
+                ¿No tienes cuenta? <a href="javascript:void(0);" onclick="document.getElementById('loginModal').classList.remove('active'); document.getElementById('registerModal').classList.add('active')">Regístrate aquí</a>
             </p>
         </div>
     </div>
@@ -529,28 +572,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Crear Cuenta</h2>
-                <button class="modal-close" onclick="closeRegisterModal()">&times;</button>
+                <button class="modal-close" onclick="document.getElementById('registerModal').classList.remove('active')">&times;</button>
             </div>
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('register') }}" method="POST" class="register-form">
                 @csrf
                 <div class="form-group">
                     <label for="registerName">Nombre Completo</label>
-                    <input type="text" id="registerName" name="name" required>
+                    <input type="text" id="registerName" name="name" placeholder="Tu nombre completo" required>
                 </div>
                 <div class="form-group">
                     <label for="registerEmail">Email</label>
-                    <input type="email" id="registerEmail" name="email" required>
+                    <input type="email" id="registerEmail" name="email" placeholder="tu@email.com" required>
                 </div>
                 <div class="form-group">
                     <label for="registerPassword">Contraseña</label>
-                    <input type="password" id="registerPassword" name="password" required>
+                    <input type="password" id="registerPassword" name="password" placeholder="Mínimo 8 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPasswordConfirm">Confirmar Contraseña</label>
+                    <input type="password" id="registerPasswordConfirm" name="password_confirmation" placeholder="Confirma tu contraseña" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-full">Crear Cuenta</button>
             </form>
             <p class="modal-footer-text">
-                ¿Ya tienes cuenta? <a href="#" onclick="switchToLogin()">Inicia sesión aquí</a>
+                ¿Ya tienes cuenta? <a href="javascript:void(0);" onclick="document.getElementById('registerModal').classList.remove('active'); document.getElementById('loginModal').classList.add('active')">Inicia sesión aquí</a>
             </p>
         </div>
+    </div>
     </div>
 
     <!-- Shopping Cart Modal -->
