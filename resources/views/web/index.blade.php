@@ -30,46 +30,6 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container header-content">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-heartbeat"></i>
-                </div>
-                <span class="logo-text">Medical Supplies</span>
-            </div>
-
-            <nav class="nav">
-                <a href="#inicio">Inicio</a>
-                <a href="#productos">Productos</a>
-                <a href="#categorias">Categorías</a>
-                <a href="#sobre-nosotros">Sobre Nosotros</a>
-                <a href="#contacto">Contacto</a>
-            </nav>
-
-            <div class="header-actions">
-                @auth
-                    <a href="{{ route('perfil.edit') }}" class="btn-icon" title="Mi Perfil">
-                        <i class="fas fa-user"></i>
-                    </a>
-                @else
-                    <button class="btn-icon" onclick="openLoginModal()" title="Iniciar Sesión">
-                        <i class="fas fa-user"></i>
-                    </button>
-                @endauth
-                <button class="btn-icon cart-btn" onclick="openCart()" title="Carrito de Compras">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-badge" id="cartBadge">0</span>
-                </button>
-                <button class="btn btn-primary desktop-only" onclick="document.getElementById('productos').scrollIntoView({ behavior: 'smooth' })">Cotizar</button>
-                <button class="btn-icon mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <!-- Hero Section -->
     <section id="inicio" class="hero">
         <div class="container hero-content">
