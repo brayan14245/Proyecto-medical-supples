@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\Web\DashboardController;
 
 Route::get('/', [WebController::class, 'index'])->name('web.index');
 Route::get('/producto/{id}', [WebController::class, 'show'])->name('web.show');
@@ -44,6 +45,23 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
     Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
+
+    Route::get('/perfil/dashboard', [DashboardController::class, 'index'])->name('perfil.dashboard');
+    Route::get('/perfil/pedido/{id}', [DashboardController::class, 'detalle'])->name('perfil.pedido.detalle');
+    Route::put('/perfil/pedido/{id}/cancelar', [DashboardController::class, 'cancelar'])->name('perfil.pedido.cancelar');
+
+    // Placeholder routes (optional, can be implemented later)
+    Route::get('/perfil/direcciones', function() {
+        return view('web.perfil.direcciones');
+    })->name('perfil.direcciones');
+
+    Route::get('/perfil/pagos', function() {
+        return view('web.perfil.pagos');
+    })->name('perfil.pagos');
+
+    Route::get('/perfil/descargas', function() {
+        return view('web.perfil.descargas');
+    })->name('perfil.descargas');
 });
 
 Route::middleware('guest')->group(function(){
@@ -53,7 +71,7 @@ Route::middleware('guest')->group(function(){
     Route::post('login', [AuthController::class, 'login'])->name('login.post');
 
     Route::get('/registro', [RegisterController::class, 'showRegistroForm'])->name('register');
-    Route::post('/registro', [RegisterController::class, 'registrar'])->name('registro.store');
+    Route::post('/registro', [RegisterController::class, 'registrar'])->name('register');
 
     Route::get('password/reset', [ResetPasswordController::class, 'showRequestForm'])->name('password.request');
     Route::post('password/email', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.send-link');

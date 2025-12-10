@@ -20,6 +20,8 @@
         <link href="{{asset('css/header.css')}}" rel="stylesheet" />
         <!-- Register CSS -->
         <link href="{{asset('css/register.css')}}" rel="stylesheet" />
+        <!-- Dashboard CSS -->
+        <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
         @stack('estilos')
