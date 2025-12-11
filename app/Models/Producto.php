@@ -10,6 +10,8 @@ class Producto extends Model
         'codigo',
         'nombre',
         'marca',
+        'categoria',
+        'zona',
         'precio',
         'descripcion',
         'imagen',

@@ -44,6 +44,9 @@ class ProductoController extends Controller
         $registro = new Producto();
         $registro->codigo=$request->input('codigo');
         $registro->nombre=$request->input('nombre');
+        $registro->marca=$request->input('marca');
+        $registro->categoria=$request->input('categoria');
+        $registro->zona=$request->input('zona');
         $registro->precio=$request->input('precio');
         $registro->descripcion=$request->input('descripcion');
         $sufijo=strtolower(Str::random(2));
@@ -85,6 +88,9 @@ class ProductoController extends Controller
         $registro=Producto::findOrFail($id);
         $registro->codigo=$request->input('codigo');
         $registro->nombre=$request->input('nombre');
+        $registro->marca=$request->input('marca');
+        $registro->categoria=$request->input('categoria');
+        $registro->zona=$request->input('zona');
         $registro->precio=$request->input('precio');
         $registro->descripcion=$request->input('descripcion');
         $sufijo=strtolower(Str::random(2));

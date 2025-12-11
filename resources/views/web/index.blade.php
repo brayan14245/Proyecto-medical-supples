@@ -657,7 +657,7 @@
 
     <script>
         // Productos desde Laravel (pasar como datos globales)
-        const products = @json($productos ?? []);
+        window.laravelProducts = @json($productos ?? []);
 
         // Toggle user menu dropdown
         function toggleUserMenu() {
@@ -687,10 +687,11 @@
 <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 <script src="{{ asset('js/script.js') }}"></script>
 <script>
-// Override para trabajar con datos de Laravel si existen
+// Inicializar productos desde Laravel
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof products !== 'undefined' && products.length > 0) {
-        // Ya tenemos los productos de Laravel
+    // Asignar productos de Laravel al array global
+    if (window.laravelProducts && window.laravelProducts.length > 0) {
+        products = window.laravelProducts;
         filteredProducts = [...products];
     }
     renderProducts();

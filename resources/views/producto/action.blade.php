@@ -27,7 +27,7 @@
                                      @enderror
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="nombre" class="form-label">nombre</label>
+                                    <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                                      id="nombre" name="nombre" value="{{old('nombre',  $registro->nombre ??'')}}" required>
                                      @error('nombre')
@@ -39,6 +39,44 @@
                                     <input type="text" class="form-control @error('precio') is-invalid @enderror"
                                      id="precio" name="precio" value="{{old('precio',  $registro->precio ??'')}}" required>
                                      @error('precio')
+                                        <small class="text-danger">{{$message}}</small>
+                                     @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="marca" class="form-label">Marca</label>
+                                    <input type="text" class="form-control @error('marca') is-invalid @enderror"
+                                     id="marca" name="marca" value="{{old('marca',  $registro->marca ??'')}}" placeholder="Ej: Philips, Medtronic">
+                                     @error('marca')
+                                        <small class="text-danger">{{$message}}</small>
+                                     @enderror
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="categoria" class="form-label">Categoría</label>
+                                    <select class="form-control @error('categoria') is-invalid @enderror" id="categoria" name="categoria">
+                                        <option value="">Seleccione una categoría</option>
+                                        <option value="diagnostico" {{ old('categoria', $registro->categoria ?? '') == 'diagnostico' ? 'selected' : '' }}>Diagnóstico</option>
+                                        <option value="cirugia" {{ old('categoria', $registro->categoria ?? '') == 'cirugia' ? 'selected' : '' }}>Cirugía</option>
+                                        <option value="laboratorio" {{ old('categoria', $registro->categoria ?? '') == 'laboratorio' ? 'selected' : '' }}>Laboratorio</option>
+                                        <option value="urgencias" {{ old('categoria', $registro->categoria ?? '') == 'urgencias' ? 'selected' : '' }}>Urgencias</option>
+                                        <option value="imagenologia" {{ old('categoria', $registro->categoria ?? '') == 'imagenologia' ? 'selected' : '' }}>Imagenología</option>
+                                        <option value="rehabilitacion" {{ old('categoria', $registro->categoria ?? '') == 'rehabilitacion' ? 'selected' : '' }}>Rehabilitación</option>
+                                    </select>
+                                     @error('categoria')
+                                        <small class="text-danger">{{$message}}</small>
+                                     @enderror
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="zona" class="form-label">Zona</label>
+                                    <select class="form-control @error('zona') is-invalid @enderror" id="zona" name="zona">
+                                        <option value="">Seleccione una zona</option>
+                                        <option value="cardiovascular" {{ old('zona', $registro->zona ?? '') == 'cardiovascular' ? 'selected' : '' }}>Cardiovascular</option>
+                                        <option value="neurologico" {{ old('zona', $registro->zona ?? '') == 'neurologico' ? 'selected' : '' }}>Neurológico</option>
+                                        <option value="musculoesqueletico" {{ old('zona', $registro->zona ?? '') == 'musculoesqueletico' ? 'selected' : '' }}>Musculoesquelético</option>
+                                        <option value="respiratorio" {{ old('zona', $registro->zona ?? '') == 'respiratorio' ? 'selected' : '' }}>Respiratorio</option>
+                                    </select>
+                                     @error('zona')
                                         <small class="text-danger">{{$message}}</small>
                                      @enderror
                                 </div>

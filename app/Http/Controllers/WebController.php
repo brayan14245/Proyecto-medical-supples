@@ -38,6 +38,14 @@ class WebController extends Controller
         $productosDb = $query->get();
         
         $productos = $productosDb->map(function ($producto) {
+            // Manejar la URL de la imagen
+            $imagen = $producto->imagen;
+            if ($imagen && !str_starts_with($imagen, 'http')) {
+                // Si es una imagen local, ya no agregamos la ruta aquí
+                // porque JavaScript lo hará
+                $imagen = $producto->imagen;
+            }
+            
             return [
                 'id' => $producto->id,
                 'name' => $producto->nombre,
@@ -45,7 +53,7 @@ class WebController extends Controller
                 'category' => $producto->categoria ?? 'diagnostico',
                 'zone' => $producto->zona ?? 'cardiovascular',
                 'price' => (float)$producto->precio,
-                'image' => $producto->imagen ?? 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&q=80',
+                'image' => $imagen,
                 'description' => $producto->descripcion ?? 'Producto médico de calidad certificada',
                 'specs' => is_array($producto->especificaciones) ? $producto->especificaciones : []
             ];
