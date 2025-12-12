@@ -42,11 +42,8 @@
         @include('web.partials.footer')
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="{{asset('js/scripts.js')}}"></script>
+        <!-- Core theme JS (incluye animaciones de página) -->
         <script src="{{asset('js/script.js')}}"></script>
-        <!-- Page Transitions JS -->
-        <script src="{{asset('js/page-transitions.js')}}"></script>
         @stack('scripts')
     </body>
 </html>

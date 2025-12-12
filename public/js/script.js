@@ -1,14 +1,21 @@
-// Medical Supplies - JavaScript
+// Medical Supplies - JavaScript Unificado
+// Incluye funcionalidad de productos y animaciones de página
+
+// ============================================
+// SECCIÓN 1: VARIABLES GLOBALES
+// ============================================
 
 // Product Data - Esta variable será inicializada por Laravel en la vista
-// Si no existe, usa un array vacío por defecto
 let products = window.laravelProducts || [];
-
-// El carrito ahora se maneja con sesiones PHP del lado del servidor
-// Estas funciones están deshabilitadas para evitar conflictos
-
-// Products Rendering and Filtering
 let filteredProducts = [...products];
+
+// Carousel variables
+let currentSlide = 0;
+const totalSlides = 3;
+
+// ============================================
+// SECCIÓN 2: FUNCIONES DE PRODUCTOS
+// ============================================
 
 function renderProducts() {
     const grid = document.getElementById('productsGrid');
@@ -94,10 +101,33 @@ function filterProducts() {
 }
 
 function filterByCategory(category) {
-    document.getElementById('categoryFilter').value = category;
+    const categoryFilter = document.getElementById('categoryFilter');
+    if (categoryFilter) {
+        categoryFilter.value = category;
+    }
     filterProducts();
-    document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+    
+    // Scroll suave a productos
+    const productsSection = document.getElementById('productos');
+    if (productsSection) {
+        const navbar = document.querySelector('nav');
+        const navbarHeight = navbar ? navbar.offsetHeight : 80;
+        const targetPosition = productsSection.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
 }
+
+// ============================================
+// SECCIÓN 3: ANIMACIONES DE PÁGINA
+// ============================================
+
+// ============================================
+// SECCIÓN 4: MODALES
+// ============================================
 
 // Product Detail Modal
 function openProductDetail(productId) {
@@ -195,6 +225,10 @@ window.onclick = function(event) {
     }
 }
 
+// ============================================
+// SECCIÓN 5: FORMULARIOS
+// ============================================
+
 // Forms
 function handleLogin(event) {
     event.preventDefault();
@@ -226,9 +260,9 @@ function handleContactSubmit(event) {
     }, 1000);
 }
 
-// Carousel
-let currentSlide = 0;
-const totalSlides = 3;
+// ============================================
+// SECCIÓN 6: CARRUSEL
+// ============================================
 
 function updateCarousel() {
     const track = document.getElementById('carouselTrack');
@@ -260,6 +294,10 @@ function updateIndicators() {
 
 // Auto-advance carousel
 setInterval(nextSlide, 5000);
+
+// ============================================
+// SECCIÓN 7: UTILIDADES
+// ============================================
 
 // Mobile Menu
 function toggleMobileMenu() {
@@ -378,21 +416,245 @@ function attachCartFormListeners() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar productos
     renderProducts();
     updateCartBadge();
     updateIndicators();
     
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+    // Inicializar animaciones de página
+    initPageTransitions();
+    initScrollProgress();
+    initImageLoading();
+    initSmoothScrollLinks();
+    initNavbarScroll();
+    initParallaxEffect();
+    animateCounters();
+    staggerAnimation('.category-card', 100);
+    staggerAnimation('.stat-item', 100);
+    staggerAnimation('.testimonial-card', 150);
+    
+    console.log('✨ Medical Supplies iniciado correctamente');
+});
+
+// ============================================
+// SECCIÓN 8: FUNCIONES DE ANIMACIÓN
+// ============================================
+
+/**
+ * Initialize section visibility animations
+ */
+function initPageTransitions() {
+    const sections = document.querySelectorAll('section');
+    
+    // Add animate-on-scroll class to sections (except hero)
+    sections.forEach(section => {
+        if (!section.classList.contains('hero')) {
+            section.classList.add('animate-on-scroll');
+        }
+    });
+    
+    // Options for Intersection Observer
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    // Callback function when section enters viewport
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    };
+    
+    // Create observer
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    
+    // Observe all sections with animation
+    sections.forEach(section => {
+        if (section.classList.contains('animate-on-scroll')) {
+            observer.observe(section);
+        }
+    });
+    
+    // Make hero section immediately visible
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        heroSection.classList.add('visible');
+    }
+}
+
+/**
+ * Initialize scroll progress bar
+ */
+function initScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', () => {
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.scrollY / windowHeight) * 100;
+        progressBar.style.transform = `scaleX(${scrolled / 100})`;
+    });
+}
+
+/**
+ * Initialize image lazy loading with fade-in effect
+ */
+function initImageLoading() {
+    const images = document.querySelectorAll('img');
+    
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+            });
+        }
+    });
+}
+
+/**
+ * Initialize smooth scroll for navigation links
+ */
+function initSmoothScrollLinks() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            
+            if (href === '#') return;
+            
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                e.preventDefault();
+                
+                const navbar = document.querySelector('nav');
+                const navbarHeight = navbar ? navbar.offsetHeight : 80;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
+                
+                if (history.pushState) {
+                    history.pushState(null, null, href);
+                }
             }
         });
     });
-});
+}
+
+/**
+ * Initialize navbar scroll effect
+ */
+function initNavbarScroll() {
+    const navbar = document.querySelector('nav');
+    
+    if (!navbar) return;
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
+
+/**
+ * Add parallax effect to sections
+ */
+function initParallaxEffect() {
+    window.addEventListener('scroll', () => {
+        const parallaxElements = document.querySelectorAll('.hero-image, .image-bg-decoration');
+        
+        parallaxElements.forEach(element => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * 0.3;
+            element.style.transform = `translateY(${rate}px)`;
+        });
+    });
+}
+
+/**
+ * Animate counters when visible
+ */
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-value');
+    const speed = 200;
+    
+    const observerOptions = {
+        threshold: 0.5
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                const counter = entry.target;
+                const target = parseInt(counter.innerText.replace(/\D/g, '')) || 100;
+                const increment = target / speed;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.innerText = Math.ceil(current) + (counter.innerText.includes('+') ? '+' : '');
+                        setTimeout(updateCounter, 1);
+                    } else {
+                        counter.innerText = counter.dataset.originalValue || counter.innerText;
+                    }
+                };
+                
+                counter.dataset.originalValue = counter.innerText;
+                counter.classList.add('counted');
+                updateCounter();
+            }
+        });
+    }, observerOptions);
+    
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+}
+
+/**
+ * Add stagger animation to grid items
+ */
+function staggerAnimation(selector, delay = 100) {
+    const items = document.querySelectorAll(selector);
+    items.forEach((item, index) => {
+        item.style.animationDelay = `${index * delay}ms`;
+    });
+}
+
+/**
+ * Add entrance animation to modals/popups
+ */
+window.showModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
+    }
+};
+
+window.hideModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+};

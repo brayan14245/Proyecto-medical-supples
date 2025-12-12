@@ -122,20 +122,11 @@ function initSmoothScrollLinks() {
                 const navbarHeight = navbar ? navbar.offsetHeight : 80;
                 const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
                 
-                // Add page transition effect (optional)
-                showPageTransition();
-                
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Hide transition overlay
-                    setTimeout(() => {
-                        hidePageTransition();
-                    }, 300);
-                }, 100);
+                // Smooth scroll without overlay
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
                 
                 // Update URL without triggering navigation
                 if (history.pushState) {
@@ -236,34 +227,26 @@ window.filterByCategory = function(category) {
     // Scroll to products section
     const productsSection = document.getElementById('productos');
     if (productsSection) {
-        showPageTransition();
+        // Calculate offset for navbar
+        const navbar = document.querySelector('nav');
+        const navbarHeight = navbar ? navbar.offsetHeight : 80;
+        const targetPosition = productsSection.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
         
-        setTimeout(() => {
-            // Calculate offset for navbar
-            const navbar = document.querySelector('nav');
-            const navbarHeight = navbar ? navbar.offsetHeight : 80;
-            const targetPosition = productsSection.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-            
-            // Apply filter
-            if (typeof originalFilterProducts === 'function') {
-                setTimeout(() => {
-                    originalFilterProducts();
-                }, 300);
-            } else if (typeof window.filterProducts === 'function') {
-                setTimeout(() => {
-                    window.filterProducts();
-                }, 300);
-            }
-            
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+        
+        // Apply filter
+        if (typeof originalFilterProducts === 'function') {
             setTimeout(() => {
-                hidePageTransition();
-            }, 800);
-        }, 200);
+                originalFilterProducts();
+            }, 300);
+        } else if (typeof window.filterProducts === 'function') {
+            setTimeout(() => {
+                window.filterProducts();
+            }, 300);
+        }
     } else if (typeof originalFilterByCategory === 'function') {
         originalFilterByCategory(category);
     }
