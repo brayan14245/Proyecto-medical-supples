@@ -25,8 +25,6 @@
         <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
-        <!-- Page Transitions CSS -->
-        <link href="{{asset('css/page-transitions.css')}}" rel="stylesheet" />
         @stack('estilos')
     </head>
     <body>

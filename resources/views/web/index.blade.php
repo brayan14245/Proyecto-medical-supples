@@ -1,4 +1,9 @@
 @extends('web.app')
+
+@push('estilos')
+<link href="{{asset('css/animations.css')}}" rel="stylesheet" />
+@endpush
+
 @section('header')
     <!-- Header incluido desde app.blade.php -->
 @endsection
