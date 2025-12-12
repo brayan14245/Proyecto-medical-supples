@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="title" content="Shop | ArtCode.com" />
+        <meta name="author" content="ArtCode" />
+        <meta name="description" content="Shop | ArtCode.com"/>
+        <meta name="keywords" content="Shop, ArtCode"
+        />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>@yield('titulo', 'Tienda - Medical Supples')</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- FontAwesome Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Header CSS -->
+        <link href="{{asset('css/header.css')}}" rel="stylesheet" />
+        <!-- Register CSS -->
+        <link href="{{asset('css/register.css')}}" rel="stylesheet" />
+        <!-- Dashboard CSS -->
+        <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+        @stack('estilos')
+    </head>
+    <body>
+        <!-- Navigation-->
+        @include('web.partials.nav')
+        <!-- Header-->
+        @if(View::hasSection('header'))
+            @include('web.partials.header')
+        @endif
+        <!-- Search and Filter Section -->
+        @yield('contenido')
+        <!-- Footer-->
+        @include('web.partials.footer')
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS (incluye animaciones de página) -->
+        <script src="{{asset('js/script.js')}}"></script>
+        @stack('scripts')
+    </body>
+</html>

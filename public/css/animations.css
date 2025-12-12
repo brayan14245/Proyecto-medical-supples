@@ -1,0 +1,327 @@
+/* ================================
+   PAGE TRANSITIONS & ANIMATIONS
+   ================================ */
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Section Transitions Base */
+section {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    scroll-margin-top: 80px;
+}
+
+section.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+section.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Page Load Animation */
+body {
+    animation: pageLoad 0.5s ease-out;
+}
+
+@keyframes pageLoad {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Hero Section Animation */
+.hero {
+    opacity: 1;
+    transform: none;
+}
+
+.hero-content {
+    opacity: 0;
+    animation: heroFadeIn 1s ease-out forwards;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-text {
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out 0.2s forwards;
+}
+
+.hero-image {
+    opacity: 0;
+    animation: slideInRight 0.8s ease-out 0.4s forwards;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Welcome Banner Animation */
+.welcome-banner {
+    opacity: 0;
+    animation: bannerSlideDown 0.6s ease-out forwards;
+}
+
+@keyframes bannerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Carousel Section Animation */
+.carousel-section.visible .carousel-wrapper {
+    animation: scaleIn 0.6s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Categories Grid Animation */
+.categories-section.visible .category-card {
+    opacity: 0;
+    animation: fadeInScale 0.5s ease-out forwards;
+}
+
+.categories-section.visible .category-card:nth-child(1) { animation-delay: 0.1s; }
+.categories-section.visible .category-card:nth-child(2) { animation-delay: 0.2s; }
+.categories-section.visible .category-card:nth-child(3) { animation-delay: 0.3s; }
+.categories-section.visible .category-card:nth-child(4) { animation-delay: 0.4s; }
+.categories-section.visible .category-card:nth-child(5) { animation-delay: 0.5s; }
+.categories-section.visible .category-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Product Catalog Animation */
+.product-catalog.visible .section-header {
+    animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-catalog.visible .search-filters {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out 0.2s forwards;
+}
+
+.product-catalog.visible .products-grid {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out 0.4s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Individual Product Cards Animation */
+.product-card {
+    opacity: 0;
+    animation: productFadeIn 0.4s ease-out forwards;
+}
+
+.product-card:nth-child(1) { animation-delay: 0.1s; }
+.product-card:nth-child(2) { animation-delay: 0.15s; }
+.product-card:nth-child(3) { animation-delay: 0.2s; }
+.product-card:nth-child(4) { animation-delay: 0.25s; }
+.product-card:nth-child(5) { animation-delay: 0.3s; }
+.product-card:nth-child(6) { animation-delay: 0.35s; }
+.product-card:nth-child(7) { animation-delay: 0.4s; }
+.product-card:nth-child(8) { animation-delay: 0.45s; }
+
+@keyframes productFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Brands Section Animation */
+.brands-section.visible .brand-logo {
+    opacity: 0;
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.brands-section.visible .brand-logo:nth-child(1) { animation-delay: 0.1s; }
+.brands-section.visible .brand-logo:nth-child(2) { animation-delay: 0.2s; }
+.brands-section.visible .brand-logo:nth-child(3) { animation-delay: 0.3s; }
+.brands-section.visible .brand-logo:nth-child(4) { animation-delay: 0.4s; }
+.brands-section.visible .brand-logo:nth-child(5) { animation-delay: 0.5s; }
+.brands-section.visible .brand-logo:nth-child(6) { animation-delay: 0.6s; }
+
+/* Certifications Animation */
+.certifications-section.visible .certification-card {
+    opacity: 0;
+    animation: fadeInScale 0.5s ease-out forwards;
+}
+
+.certifications-section.visible .certification-card:nth-child(1) { animation-delay: 0.1s; }
+.certifications-section.visible .certification-card:nth-child(2) { animation-delay: 0.2s; }
+.certifications-section.visible .certification-card:nth-child(3) { animation-delay: 0.3s; }
+.certifications-section.visible .certification-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Contact Section Animation */
+#contacto.visible .contact-info,
+#contacto.visible .contact-form {
+    opacity: 0;
+    animation: fadeInSlide 0.8s ease-out forwards;
+}
+
+#contacto.visible .contact-info { animation-delay: 0.2s; }
+#contacto.visible .contact-form { animation-delay: 0.4s; }
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Section Header Animation */
+.section-header {
+    opacity: 0;
+    animation: headerSlide 0.6s ease-out forwards;
+}
+
+@keyframes headerSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover Effects */
+.category-card,
+.product-card {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-card:hover,
+.product-card:hover {
+    transform: translateY(-8px);
+}
+
+/* Button Transitions */
+.btn, button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover, button:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active, button:active {
+    transform: translateY(0);
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    section {
+        transform: translateY(20px);
+    }
+    .hero-text,
+    .hero-image {
+        animation-duration: 0.6s;
+    }
+    .category-card,
+    .product-card {
+        animation-duration: 0.4s;
+    }
+}
