@@ -25,6 +25,8 @@
         <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+        <!-- Page Transitions CSS -->
+        <link href="{{asset('css/page-transitions.css')}}" rel="stylesheet" />
         @stack('estilos')
     </head>
     <body>
@@ -40,8 +42,6 @@
         @include('web.partials.footer')
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS (incluye animaciones de página) -->
-        <script src="{{asset('js/script.js')}}"></script>
         @stack('scripts')
     </body>
 </html>

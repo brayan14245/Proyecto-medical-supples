@@ -456,8 +456,6 @@
 @endsection
 
 @push('page-scripts')
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-<script src="{{ asset('js/script.js') }}"></script>
 <script>
 // Inicializar productos desde Laravel
 document.addEventListener('DOMContentLoaded', function() {
