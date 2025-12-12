@@ -91,4 +91,16 @@ class CarritoController extends Controller
         session()->forget('carrito');
         return redirect()->back()->with('success', 'Carrito vaciado');
     }
+
+    /**
+     * Obtener el contador de items en el carrito (para AJAX)
+     */
+    public function getCount(){
+        $carrito = session('carrito', []);
+        $totalItems = array_sum(array_column($carrito, 'cantidad'));
+        
+        return response()->json([
+            'count' => $totalItems
+        ]);
+    }
 }
