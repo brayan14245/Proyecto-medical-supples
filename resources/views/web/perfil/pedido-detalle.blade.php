@@ -20,6 +20,7 @@
             @php
                 $estado = strtolower($pedido->estado);
                 $statusClass = match($estado) {
+                    'en espera' => 'pending',
                     'pendiente' => 'pending',
                     'procesando' => 'processing',
                     'completado' => 'completed',
@@ -27,6 +28,7 @@
                     default => 'pending'
                 };
                 $statusLabel = match($estado) {
+                    'en espera' => 'En Espera',
                     'pendiente' => 'Pendiente',
                     'procesando' => 'Procesando',
                     'completado' => 'Completado',

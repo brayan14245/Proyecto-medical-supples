@@ -34,37 +34,76 @@ class PedidoController extends Controller
         return view('pedido.index', compact('registros', 'texto'));
     }
 
+    public function checkout(){
+        $carrito = session('carrito', []);
+        
+        if (empty($carrito)) {
+            return redirect()->route('carrito.mostrar')->with('error', 'El carrito está vacío.');
+        }
+        
+        return view('web.checkout', compact('carrito'));
+    }
+
     public function realizar(Request $request){
-        $carrito = session()->get('carrito', []);
+        $request->validate([
+            'direccion' => 'required|string',
+            'metodo_envio' => 'required|string',
+            'metodo_pago' => 'required|string'
+        ]);
+
+        $carrito = session('carrito', []);
 
         if (empty($carrito)) {
-            return redirect()->back()->with('mensaje', 'El carrito está vacío.');
+            return redirect()->route('carrito.mostrar')->with('error', 'El carrito está vacío.');
         }
+        
         DB::beginTransaction();
         try {
-            // 1. Calcular el total
-            $total = 0;
+            // 1. Calcular totales
+            $subtotal = 0;
             foreach ($carrito as $item) {
-                $total += $item['precio'] * $item['cantidad'];
+                $subtotal += $item['precio'] * $item['cantidad'];
             }
-            // 2. Crear el pedido
+
+            // 2. Calcular costo de envío
+            $costosEnvio = [
+                'standard' => 0,
+                'express' => 50,
+                'premium' => 100
+            ];
+            $costoEnvio = $costosEnvio[$request->metodo_envio] ?? 0;
+            $total = $subtotal + $costoEnvio;
+
+            // 3. Crear el pedido
             $pedido = Pedido::create([
-                'user_id' => auth()->id(), 'total' => $total, 'estado' => 'pendiente'
+                'user_id' => auth()->id(),
+                'subtotal' => $subtotal,
+                'costo_envio' => $costoEnvio,
+                'total' => $total,
+                'estado' => 'en espera',
+                'metodo_envio' => $request->metodo_envio,
+                'metodo_pago' => $request->metodo_pago,
+                'direccion_envio' => $request->direccion
             ]);
-            // 3. Crear los detalles del pedido
+
+            // 4. Crear los detalles del pedido
             foreach ($carrito as $productoId => $item) {
                 PedidoDetalle::create([
-                    'pedido_id' => $pedido->id, 'producto_id' => $productoId,
-                    'cantidad' => $item['cantidad'], 'precio' => $item['precio'],
+                    'pedido_id' => $pedido->id,
+                    'producto_id' => $productoId,
+                    'cantidad' => $item['cantidad'],
+                    'precio' => $item['precio'],
                 ]);
             }
-            // 4. Vaciar el carrito de la sesión
+
+            // 5. Vaciar el carrito de la sesión
             session()->forget('carrito');
+
             DB::commit();
-            return redirect()->route('carrito.mostrar')->with('mensaje', 'Pedido realizado correctamente.');
+            return redirect()->route('perfil.dashboard')->with('mensaje', 'Pedido realizado correctamente. Tu pedido está en espera de procesamiento.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Hubo un error al procesar el pedido.');
+            return redirect()->back()->with('error', 'Hubo un error al procesar el pedido: ' . $e->getMessage());
         }
     }
 

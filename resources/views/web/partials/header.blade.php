@@ -45,9 +45,14 @@
                     <i class="fas fa-user"></i>
                 </button>
             @endauth
-            <button class="btn-icon cart-btn" onclick="window.location.href='{{ route('carrito.mostrar') }}'" title="Carrito de Compras" style="background: none; border: none; cursor: pointer;">
+            <a href="{{ route('carrito.mostrar') }}" class="btn-icon cart-btn" title="Carrito de Compras" style="background: none; border: none; cursor: pointer; color: inherit; text-decoration: none;">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge" id="cartBadge">0</span>
+                @php
+                    $carrito = session('carrito', []);
+                    $totalItems = array_sum(array_column($carrito, 'cantidad'));
+                @endphp
+                <span class="cart-badge" id="cartBadge">{{ $totalItems }}</span>
+            </a>
             </button>
             <button class="btn-icon mobile-menu-btn" onclick="toggleMobileMenu()" style="background: none; border: none; cursor: pointer;">
                 <i class="fas fa-bars"></i>

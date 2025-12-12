@@ -4,115 +4,8 @@
 // Si no existe, usa un array vacío por defecto
 let products = window.laravelProducts || [];
 
-// Cart Management
-let cart = JSON.parse(localStorage.getItem('medicalCart')) || [];
-
-function updateCart() {
-    localStorage.setItem('medicalCart', JSON.stringify(cart));
-    updateCartBadge();
-    renderCart();
-}
-
-function updateCartBadge() {
-    const badge = document.getElementById('cartBadge');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    badge.textContent = totalItems;
-    badge.style.display = totalItems > 0 ? 'flex' : 'none';
-}
-
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity: 1
-        });
-    }
-    
-    updateCart();
-    showNotification('Producto agregado al carrito');
-}
-
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCart();
-}
-
-function updateQuantity(productId, change) {
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            removeFromCart(productId);
-        } else {
-            updateCart();
-        }
-    }
-}
-
-function renderCart() {
-    const cartItems = document.getElementById('cartItems');
-    const subtotalEl = document.getElementById('cartSubtotal');
-    const shippingEl = document.getElementById('cartShipping');
-    const totalEl = document.getElementById('cartTotal');
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>';
-        subtotalEl.textContent = '$0.00';
-        shippingEl.textContent = '$0.00';
-        totalEl.textContent = '$0.00';
-        return;
-    }
-    
-    cartItems.innerHTML = cart.map(item => `
-        <div class="cart-item">
-            <div class="cart-item-image">
-                <img src="${item.image}" alt="${item.name}">
-            </div>
-            <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                <div class="cart-item-quantity">
-                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-                </div>
-            </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    `).join('');
-    
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = subtotal >= 500 ? 0 : 50;
-    const total = subtotal + shipping;
-    
-    subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    shippingEl.textContent = shipping === 0 ? 'GRATIS' : `$${shipping.toFixed(2)}`;
-    totalEl.textContent = `$${total.toFixed(2)}`;
-}
-
-function checkout() {
-    if (cart.length === 0) {
-        showNotification('Tu carrito está vacío', 'error');
-        return;
-    }
-    showNotification('Procesando pedido...');
-    setTimeout(() => {
-        cart = [];
-        updateCart();
-        closeCart();
-        showNotification('¡Pedido realizado con éxito!', 'success');
-    }, 1500);
-}
+// El carrito ahora se maneja con sesiones PHP del lado del servidor
+// Estas funciones están deshabilitadas para evitar conflictos
 
 // Products Rendering and Filtering
 let filteredProducts = [...products];
@@ -136,9 +29,12 @@ function renderProducts() {
             ? product.image 
             : (product.image ? `/uploads/productos/${product.image}` : 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&q=80');
         
+        // Obtener CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+        
         return `
-            <div class="product-card" onclick="openProductDetail(${product.id})">
-                <div class="product-image">
+            <div class="product-card">
+                <div class="product-image" onclick="window.location.href='/producto/${product.id}'" style="cursor: pointer;">
                     <img src="${imageUrl}" alt="${product.name}">
                 </div>
                 <div class="product-info">
@@ -147,15 +43,23 @@ function renderProducts() {
                     <p class="product-brand">${product.brand}</p>
                     <div class="product-price">$${parseFloat(product.price).toFixed(2)}</div>
                     <div class="product-actions">
-                        <button class="btn btn-primary btn-add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
-                            <i class="fas fa-shopping-cart"></i>
-                            Agregar
-                        </button>
+                        <form class="add-to-cart-form" action="/carrito/agregar" method="POST" style="width: 100%;">
+                            <input type="hidden" name="_token" value="${csrfToken}">
+                            <input type="hidden" name="producto_id" value="${product.id}">
+                            <input type="hidden" name="cantidad" value="1">
+                            <button type="submit" class="btn btn-primary btn-add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                Agregar
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         `;
     }).join('');
+    
+    // Agregar event listeners a los formularios después de renderizar
+    attachCartFormListeners();
 }
 
 function getCategoryName(category) {
@@ -282,15 +186,6 @@ function switchToRegister() {
 function switchToLogin() {
     closeRegisterModal();
     openLoginModal();
-}
-
-function openCart() {
-    document.getElementById('cartModal').classList.add('active');
-    renderCart();
-}
-
-function closeCart() {
-    document.getElementById('cartModal').classList.remove('active');
 }
 
 // Close modals when clicking outside
@@ -423,6 +318,63 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Función para agregar event listeners a formularios de agregar al carrito
+function attachCartFormListeners() {
+    const forms = document.querySelectorAll('.add-to-cart-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            
+            // Deshabilitar botón y mostrar estado de carga
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agregando...';
+            
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Actualizar badge del carrito
+                    const badge = document.querySelector('.cart-badge');
+                    if (badge) {
+                        badge.textContent = data.totalItems;
+                        badge.style.display = data.totalItems > 0 ? 'block' : 'none';
+                    }
+                    
+                    // Mostrar notificación de éxito
+                    showNotification(data.message, 'success');
+                    
+                    // Cambiar temporalmente el texto del botón
+                    button.innerHTML = '<i class="fas fa-check"></i> Agregado';
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Error al agregar producto');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al agregar el producto al carrito', 'error');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        });
+    });
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {

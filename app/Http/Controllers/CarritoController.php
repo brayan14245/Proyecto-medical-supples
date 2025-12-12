@@ -26,6 +26,17 @@ class CarritoController extends Controller
             ];
         }
         session()->put('carrito', $carrito);
+        
+        // Si es una petición AJAX, retornar JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            $totalItems = array_sum(array_column($carrito, 'cantidad'));
+            return response()->json([
+                'success' => true,
+                'message' => 'Producto agregado al carrito',
+                'totalItems' => $totalItems
+            ]);
+        }
+        
         return redirect()->back()->with('mensaje', 'Producto agregado al carrito');
     }
 
@@ -66,6 +77,7 @@ class CarritoController extends Controller
 
         return redirect()->back()->with('mensaje', 'Cantidad actualizada en el carrito');
     }
+    
     public function eliminar($id){
         $carrito = session()->get('carrito');
         if (isset($carrito[$id])) {
@@ -74,6 +86,7 @@ class CarritoController extends Controller
         }
         return redirect()->back()->with('success', 'Producto eliminado');
     }
+    
     public function vaciar(){
         session()->forget('carrito');
         return redirect()->back()->with('success', 'Carrito vaciado');

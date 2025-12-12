@@ -25,6 +25,12 @@ return new class extends Migration
             if (!Schema::hasColumn('pedidos', 'metodo_envio')) {
                 $table->string('metodo_envio', 100)->nullable()->after('descuento');
             }
+            if (!Schema::hasColumn('pedidos', 'metodo_pago')) {
+                $table->string('metodo_pago', 100)->nullable()->after('metodo_envio');
+            }
+            if (!Schema::hasColumn('pedidos', 'direccion_envio')) {
+                $table->text('direccion_envio')->nullable()->after('metodo_pago');
+            }
         });
     }
 
@@ -34,10 +40,24 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pedidos', function (Blueprint $table) {
-            $table->dropColumnIfExists('subtotal');
-            $table->dropColumnIfExists('costo_envio');
-            $table->dropColumnIfExists('descuento');
-            $table->dropColumnIfExists('metodo_envio');
+            if (Schema::hasColumn('pedidos', 'subtotal')) {
+                $table->dropColumn('subtotal');
+            }
+            if (Schema::hasColumn('pedidos', 'costo_envio')) {
+                $table->dropColumn('costo_envio');
+            }
+            if (Schema::hasColumn('pedidos', 'descuento')) {
+                $table->dropColumn('descuento');
+            }
+            if (Schema::hasColumn('pedidos', 'metodo_envio')) {
+                $table->dropColumn('metodo_envio');
+            }
+            if (Schema::hasColumn('pedidos', 'metodo_pago')) {
+                $table->dropColumn('metodo_pago');
+            }
+            if (Schema::hasColumn('pedidos', 'direccion_envio')) {
+                $table->dropColumn('direccion_envio');
+            }
         });
     }
 };

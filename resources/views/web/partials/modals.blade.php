@@ -57,34 +57,6 @@
     </div>
 </div>
 
-<!-- Shopping Cart Modal -->
-<div id="cartModal" class="modal cart-modal">
-    <div class="modal-content cart-content">
-        <div class="modal-header">
-            <h2>Carrito de Compras</h2>
-            <button class="modal-close" onclick="closeCart()">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <!-- Cart items will be rendered here -->
-        </div>
-        <div class="cart-summary">
-            <div class="summary-row">
-                <span>Subtotal:</span>
-                <span id="cartSubtotal">$0.00</span>
-            </div>
-            <div class="summary-row">
-                <span>Envío:</span>
-                <span id="cartShipping">$0.00</span>
-            </div>
-            <div class="summary-row summary-total">
-                <span>Total:</span>
-                <span id="cartTotal">$0.00</span>
-            </div>
-            <button class="btn btn-primary btn-full" onclick="checkout()">Proceder al Pago</button>
-        </div>
-    </div>
-</div>
-
 <!-- Product Detail Modal -->
 <div id="productModal" class="modal">
     <div class="modal-content product-modal-content">

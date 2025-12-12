@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('roles', RoleController::class);
     Route::resource('productos', ProductoController::class);
 
+    Route::get('/checkout', [PedidoController::class, 'checkout'])->name('checkout');
     Route::post('/pedido/realizar', [PedidoController::class, 'realizar'])->name('pedido.realizar');
     Route::get('/perfil/pedidos', [PedidoController::class, 'index'])->name('perfil.pedidos');
     Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.cambiar.estado');    

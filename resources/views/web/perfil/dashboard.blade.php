@@ -77,6 +77,7 @@
                                         @php
                                             $estado = strtolower($pedido->estado);
                                             $statusClass = match($estado) {
+                                                'en espera' => 'pending',
                                                 'pendiente' => 'pending',
                                                 'procesando' => 'processing',
                                                 'completado' => 'completed',
@@ -84,6 +85,7 @@
                                                 default => 'pending'
                                             };
                                             $statusLabel = match($estado) {
+                                                'en espera' => 'En Espera',
                                                 'pendiente' => 'Pendiente',
                                                 'procesando' => 'Procesando',
                                                 'completado' => 'Completado',
@@ -96,7 +98,7 @@
                                     <td>
                                         <div class="order-actions">
                                             <a href="{{ route('perfil.pedido.detalle', $pedido->id) }}" class="action-btn">Ver Detalles</a>
-                                            @if($estado === 'pendiente')
+                                            @if(in_array($estado, ['en espera', 'pendiente']))
                                                 <form method="POST" action="{{ route('perfil.pedido.cancelar', $pedido->id) }}" style="display: inline;">
                                                     @csrf
                                                     @method('PUT')

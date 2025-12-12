@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Usuario que hizo el pedido
             $table->decimal('total', 10, 2); // Total del pedido
-            $table->string('estado', 20)->default('pendiente'); // Estado del pedido
+            $table->string('estado', 20)->default('en espera'); // Estado del pedido
             $table->timestamps();
         });
     }

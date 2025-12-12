@@ -9,6 +9,7 @@
         <meta name="description" content="Shop | ArtCode.com"/>
         <meta name="keywords" content="Shop, ArtCode"
         />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('titulo', 'Tienda - Medical Supples')</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
