@@ -25,6 +25,8 @@
         <link href="{{asset('css/dashboard.css')}}" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+        <!-- Page Transitions CSS -->
+        <link href="{{asset('css/page-transitions.css')}}" rel="stylesheet" />
         @stack('estilos')
     </head>
     <body>
@@ -43,6 +45,8 @@
         <!-- Core theme JS-->
         <script src="{{asset('js/scripts.js')}}"></script>
         <script src="{{asset('js/script.js')}}"></script>
+        <!-- Page Transitions JS -->
+        <script src="{{asset('js/page-transitions.js')}}"></script>
         @stack('scripts')
     </body>
 </html>
